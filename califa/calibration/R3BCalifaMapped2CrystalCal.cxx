@@ -107,7 +107,7 @@ void R3BCalifaMapped2CrystalCal::SetParameter()
     // Then make cal[id]=cal[id+2432] in case you are using the new unpacker
     // (where barrel is always in [1, 1952]) with an old calibration
 
-    constexpr int offset = 2432;
+    constexpr int offset = 2544;
     auto& cal = *fCalParams; // because (*ptr)[i] is ugly and error-prone
     auto& tot = *fCalTotParams;
     if (fNumParams != 2 || fNumCrystals < 2 * offset)
@@ -119,7 +119,7 @@ void R3BCalifaMapped2CrystalCal::SetParameter()
     {
         auto a = cal.GetAt(2 * (id - 1) + 0);
         auto b = cal.GetAt(2 * (id - 1) + 1);
-        return (std::isnan(a) || a == 0.0) && (std::isnan(a) || a == 0.0);
+        return (std::isnan(a) || a == 0.0) && (std::isnan(b) || b == 0.0);
     };
 
     int replaced{};
@@ -242,9 +242,13 @@ void R3BCalifaMapped2CrystalCal::Exec(Option_t* option)
         double TotCal = Tot;
         if (fCalTotParams)
         {
-            double a0 = fCalTotParams->GetAt(fNumTotParams * (crystalId - 1));
-            double a1 = fCalTotParams->GetAt(fNumTotParams * (crystalId - 1) + 1);
-            TotCal = a0 * TMath::Exp(Tot / a1);
+            //double a0 = fCalTotParams->GetAt(fNumTotParams * (crystalId - 1));
+            //double a1 = fCalTotParams->GetAt(fNumTotParams * (crystalId - 1) + 1);
+            double a0 = 50;
+            double a1 = 900;
+	    
+	    if (Tot>0) TotCal = a0 * TMath::Exp(Tot / a1);
+	    else TotCal = 0;
         }
         AddCalData(crystalId, cal[en], cal[Nf], cal[Ns], wrts, TotCal);
     }

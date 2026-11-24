@@ -426,6 +426,8 @@ void R3BTofDCal2Hit::Exec(Option_t* option)
                 vmultihits[iPlane][iBar] += 1;
 
                 auto par = fHitPar->GetModuleParAt(iPlane, iBar);
+		cout << "PLANE: " << iPlane << " BAR: " << iBar << endl;
+                cout << par->GetPar1zb() << endl;
                 if (!par)
                 {
                     R3BLOG(error, "Hit par not found, Plane: " << top->GetDetectorId() << ", Bar: " << top->GetBarId());

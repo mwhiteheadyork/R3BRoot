@@ -93,7 +93,8 @@ include_directories(SYSTEM ${SYSTEM_INCLUDE_DIRECTORIES})
 
 link_directories(${FAIRROOT_LIBRARY_DIR} ${ROOT_LIBRARY_DIR})
 
-file(GLOB SRCS ./online/*.cxx ./offline/*.cxx ./pars/*.cxx)
+#file(GLOB SRCS./online/*.cxx ./offline/*.cxx ./pars/*.cxx)
+file(GLOB SRCS ./offline/*.cxx ./pars/*.cxx)
 
 # fill list of header files from list of source files
 # by exchanging the file extension
